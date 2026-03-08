@@ -110,7 +110,9 @@
     <script>
         // Mapa
         const map = L.map('map', { zoomControl: false }).setView([19.4162, -99.1388], 17);
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png').addTo(map);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap'
+}).addTo(map);
         L.marker([19.4162, -99.1388], {icon: L.divIcon({className: 'm', html: `<div style="background:#7000ff;width:16px;height:16px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 20px #7000ff;"></div>`})}).addTo(map);
 
         // Lógica del Carrusel Automático (4 segundos)
