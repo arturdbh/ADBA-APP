@@ -1,0 +1,11 @@
+{
+  "name": "ADBA Diseño",
+  "short_name": "ADBA",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#050505",
+  "theme_color": "#7000ff",
+  "icons": [
+    { "src": "/img/logo.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
