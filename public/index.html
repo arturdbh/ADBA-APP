@@ -13,23 +13,18 @@
         :root { --primary: #7000ff; --bg: #050505; --wa: #25d366; --accent: #00f2fe; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         
-        /* --- MEJORA INCISO 1: TEXTURA DE FONDO --- */
         body { 
-            margin: 0; 
-            background: var(--bg); 
+            margin: 0; background: var(--bg); 
             background-image: radial-gradient(circle, rgba(112, 0, 255, 0.15) 1px, transparent 1px);
-            background-size: 30px 30px;
-            background-attachment: fixed;
-            color: white; 
-            font-family: 'Inter', sans-serif; 
-            text-align: center; 
-            overflow-x: hidden; 
+            background-size: 30px 30px; background-attachment: fixed;
+            color: white; font-family: 'Inter', sans-serif; text-align: center; overflow-x: hidden; 
         }
 
-        /* --- ANIMACIONES --- */
-        @keyframes logo-glow {
-            0%, 100% { filter: drop-shadow(0 0 10px rgba(112, 0, 255, 0.6)); transform: translateY(0); }
-            50% { filter: drop-shadow(0 0 30px rgba(0, 242, 254, 0.8)); transform: translateY(-5px); }
+        /* --- ANIMACIÓN WHATSAPP --- */
+        @keyframes wa-pulse {
+            0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.8); transform: scale(1); }
+            70% { box-shadow: 0 0 0 20px rgba(37, 211, 102, 0); transform: scale(1.05); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); transform: scale(1); }
         }
 
         .reveal-item { opacity: 0; transform: translateY(30px); transition: all 0.8s ease; }
@@ -37,39 +32,68 @@
 
         /* --- HEADER --- */
         .header { padding: 60px 20px 30px; }
-        .logo-img { width: 85%; max-width: 300px; animation: logo-glow 5s infinite ease-in-out; }
-        .slogan { font-size: 16px; font-style: italic; color: #aaa; margin: 15px 0 25px; }
-
+        .logo-img { width: 85%; max-width: 300px; filter: drop-shadow(0 0 15px var(--primary)); }
         .btn-group { display: flex; gap: 12px; justify-content: center; margin-bottom: 30px; }
         .btn-action {
             padding: 14px 22px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2);
             color: white; border-radius: 18px; text-decoration: none; font-size: 11px; font-weight: 800;
-            letter-spacing: 1px; backdrop-filter: blur(15px); transition: 0.3s;
+            letter-spacing: 1px; backdrop-filter: blur(15px); transition: 0.3s; cursor: pointer;
         }
 
-        /* --- MEJORA INCISO 3: TÍTULOS NEÓN --- */
+        /* --- TÍTULOS NEÓN --- */
         .service-title { 
-            font-size: 22px; 
-            font-weight: 900; 
-            margin-bottom: 15px; 
-            text-transform: uppercase;
+            font-size: 22px; font-weight: 900; margin-bottom: 15px; text-transform: uppercase;
             background: linear-gradient(90deg, #fff, var(--primary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: 2px;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
 
-        /* --- SERVICIOS --- */
+        /* --- SERVICIOS: RESPLANDOR FIJO Y ZOOM --- */
         .services-container { padding: 20px; display: flex; flex-direction: column; align-items: center; gap: 50px; }
-        .service-card { width: 100%; max-width: 350px; cursor: pointer; transition: 0.4s; }
-        .image-wrapper { width: 100%; aspect-ratio: 16 / 9; border-radius: 25px; overflow: hidden; border: 2px solid rgba(112, 0, 255, 0.3); background-size: cover; background-position: center; }
+        .service-card { width: 100%; max-width: 350px; cursor: pointer; }
+        
+        .image-wrapper { 
+            width: 100%; aspect-ratio: 16 / 9; border-radius: 25px; overflow: hidden; 
+            background-size: cover; background-position: center;
+            border: 2px solid rgba(112, 0, 255, 0.6);
+            box-shadow: 0 0 35px rgba(112, 0, 255, 0.8); /* RESPLANDOR FIJO */
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
+        }
+
+        .service-card:hover .image-wrapper {
+            transform: scale(1.1); /* EFECTO ZOOM */
+            box-shadow: 0 0 50px var(--primary);
+            border-color: var(--accent);
+        }
+
         .description { max-height: 0; overflow: hidden; transition: 0.5s ease; background: rgba(255,255,255,0.04); backdrop-filter: blur(20px); border-radius: 0 0 25px 25px; margin-top: -10px; padding: 0 25px; border: 1px solid rgba(255,255,255,0.1); }
         .service-card.active .description { max-height: 500px; padding: 45px 25px 25px; }
 
-        /* --- UBICACIÓN --- */
-        #map { height: 300px; width: 350px; border-radius: 35px; border: 3px solid var(--primary); margin: 25px 0; box-shadow: 0 0 30px rgba(112, 0, 255, 0.4); }
+        /* --- UBICACIÓN CENTRADA --- */
+        .location-section {
+            display: flex; flex-direction: column; align-items: center; 
+            justify-content: center; padding: 20px; width: 100%;
+        }
 
-        .float-wa { position: fixed; bottom: 35px; right: 25px; z-index: 1000; background: var(--wa); width: 65px; height: 65px; border-radius: 50%; display: flex; justify-content: center; align-items: center; box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
+        #map { 
+            height: 300px; width: 90%; max-width: 350px; 
+            border-radius: 35px; border: 3px solid var(--primary); 
+            margin: 20px auto; background: white; 
+        }
+
+        .address-text { 
+            font-size: 14px; color: var(--accent); font-weight: bold; 
+            cursor: pointer; margin-bottom: 10px; text-decoration: underline;
+        }
+
+        /* BOTÓN WHATSAPP CON ANIMACIÓN */
+        .float-wa { 
+            position: fixed; bottom: 35px; right: 25px; z-index: 1000;
+            background: var(--wa); width: 65px; height: 65px; border-radius: 50%; 
+            display: flex; justify-content: center; align-items: center; 
+            animation: wa-pulse 2s infinite; 
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+        }
+
         footer { padding: 50px; font-size: 11px; color: #444; }
     </style>
 </head>
@@ -80,15 +104,15 @@
         <p class="slogan">"Hacemos realidad tus ideas"</p>
         <div class="btn-group">
             <a href="/save-contact" class="btn-action">GUARDAR CONTACTO</a>
-            <a href="http://googleusercontent.com/maps.google.com/6" target="_blank" class="btn-action">CÓMO LLEGAR</a>
+            <button onclick="irAUbicacion()" class="btn-action" style="background: var(--primary); border: none;">CÓMO LLEGAR</button>
         </div>
     </div>
 
     <div class="services-container" id="services-grid"></div>
 
     <div class="location-section reveal-item">
-        <h2 style="font-size: 14px; letter-spacing: 4px; color: var(--primary);">UBICACIÓN</h2>
-        <p style="font-size: 13px; opacity: 0.7;">José T. Cuellar 79H, Col. Obrera, 06800 CDMX</p>
+        <h2 style="font-size: 14px; color: var(--primary); letter-spacing: 4px;">UBICACIÓN</h2>
+        <div class="address-text" onclick="irAUbicacion()">José T. Cuellar 79H, Col. Obrera, 06800 CDMX</div>
         <div id="map"></div>
     </div>
 
@@ -98,20 +122,32 @@
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
-        // --- MAPA SINCRONIZADO CON TUS COORDENADAS DE GOOGLE ---
-        const coords = [19.4161, -99.1387]; 
-        const map = L.map('map', { zoomControl: false }).setView(coords, 18);
+        // --- COORDENADAS EXACTAS PROPORCIONADAS ---
+        const coordsArturo = [19.415068, -99.138576];
         
+        const map = L.map('map', { zoomControl: false }).setView(coordsArturo, 18);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
-        L.marker(coords, {
+        L.marker(coordsArturo, {
             icon: L.divIcon({
                 className: 'm', 
-                html: `<div style="background:#7000ff;width:18px;height:18px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 25px #7000ff;"></div>`
+                html: `<div style="background:#7000ff;width:20px;height:20px;border-radius:50%;border:3px solid #fff;box-shadow:0 0 25px #7000ff;"></div>`
             })
         }).addTo(map);
 
-        // Carga de servicios
+        // FUNCIÓN: NAVEGACIÓN DIRECTA
+       function irAUbicacion() {
+    // Primero centramos el mapa en la app
+    map.flyTo(coordsArturo, 19);
+    
+    // Esperamos un segundo y abrimos la navegación real
+    setTimeout(() => {
+        // Este formato (dir/api=1) fuerza a Google Maps a ir a las COORDENADAS, no a una dirección de texto
+        const urlNavegacion = `https://www.google.com/maps/dir/?api=1&destination=${coordsArturo[0]},${coordsArturo[1]}&travelmode=driving`;
+        window.open(urlNavegacion, '_blank');
+    }, 1000);
+        }
+
         fetch('/api/servicios').then(res => res.json()).then(data => {
             const container = document.getElementById('services-grid');
             data.forEach(s => {
@@ -121,12 +157,11 @@
                 card.innerHTML = `
                     <div class="service-title">${s.titulo}</div>
                     <div class="image-wrapper" style="background-image: url('/img/${s.id}.jpg');"></div>
-                    <div class="description"><p>${s.resumen}</p></div>
+                    <div class="description"><p style="font-size: 14px; color: #ccc; padding: 20px;">${s.resumen}</p></div>
                 `;
                 container.appendChild(card);
             });
             
-            // Observer para animaciones
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('reveal'); });
             }, { threshold: 0.1 });
