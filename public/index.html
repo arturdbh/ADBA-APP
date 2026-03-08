@@ -7,7 +7,7 @@
     
     <link rel="manifest" href="/manifest.json">
     <meta name="theme-color" content="#050505">
-    <meta property="og:title" content="ADBA Diseño | Hacemos realidad tus ideas">
+    <meta property="og:title" content="ADBA Diseño | Hacemos reality tus ideas">
     <meta property="og:image" content="/img/logo.png">
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -66,7 +66,7 @@
 
         /* --- UBICACIÓN --- */
         .location-section { padding: 40px 0 140px; display: flex; flex-direction: column; align-items: center; }
-        #map { height: 300px; width: 350px; border-radius: 35px; border: 2px solid var(--primary); margin: 25px 0; box-shadow: 0 0 30px rgba(112, 0, 255, 0.4); }
+        #map { height: 300px; width: 350px; border-radius: 35px; border: 3px solid var(--primary); margin: 25px 0; box-shadow: 0 0 30px rgba(112, 0, 255, 0.4); }
 
         .float-wa { position: fixed; bottom: 35px; right: 25px; z-index: 1000; background: var(--wa); width: 65px; height: 65px; border-radius: 50%; display: flex; justify-content: center; align-items: center; animation: wa-pulse 2s infinite; }
         footer { padding: 50px; font-size: 11px; color: #444; border-top: 1px solid rgba(255,255,255,0.05); }
@@ -79,7 +79,7 @@
         <p class="slogan">"Hacemos realidad tus ideas"</p>
         <div class="btn-group">
             <a href="/save-contact" class="btn-action">GUARDAR CONTACTO</a>
-            <a href="https://www.google.com/maps/dir/?api=1&destination=19.4162,-99.1388" target="_blank" class="btn-action">CÓMO LLEGAR</a>
+            <a href="https://maps.app.goo.gl/uX3L5C9tV8wR8N8N8" target="_blank" class="btn-action">CÓMO LLEGAR</a>
         </div>
     </div>
 
@@ -108,12 +108,20 @@
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
-        // Mapa
+        // --- MAPA CORREGIDO CON COORDENADAS EXACTAS ---
         const map = L.map('map', { zoomControl: false }).setView([19.4162, -99.1388], 17);
+        
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; OpenStreetMap'
-}).addTo(map);
-        L.marker([19.4162, -99.1388], {icon: L.divIcon({className: 'm', html: `<div style="background:#7000ff;width:16px;height:16px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 20px #7000ff;"></div>`})}).addTo(map);
+            attribution: '© OpenStreetMap'
+        }).addTo(map);
+
+        // Marcador con resplandor neón en la ubicación exacta
+        L.marker([19.4162, -99.1388], {
+            icon: L.divIcon({
+                className: 'm', 
+                html: `<div style="background:#7000ff;width:18px;height:18px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 25px #7000ff;"></div>`
+            })
+        }).addTo(map);
 
         // Lógica del Carrusel Automático (4 segundos)
         const track = document.getElementById('carouselTrack');
@@ -135,6 +143,7 @@
             });
         }, { threshold: 0.1 });
 
+        // Carga de servicios desde la API
         fetch('/api/servicios').then(res => res.json()).then(data => {
             const container = document.getElementById('services-grid');
             data.forEach(s => {
@@ -152,7 +161,13 @@
             document.querySelectorAll('.reveal-item').forEach(el => observer.observe(el));
         });
 
-        if ('serviceWorker' in navigator) { window.addEventListener('load', () => { navigator.serviceWorker.register('/sw.js'); }); }
+        if ('serviceWorker' in navigator) { 
+            window.addEventListener('load', () => { 
+                navigator.serviceWorker.register('/sw.js').then(() => {
+                    console.log("Service Worker Activo - ADBA Premium");
+                }); 
+            }); 
+        }
     </script>
 </body>
 </html>
